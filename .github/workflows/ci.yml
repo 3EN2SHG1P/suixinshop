@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: pytest (MySQL 8)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ci_root_password
+          # 与 docker-compose.yml 对齐：容器内允许 root 从 Docker 网关地址连接
+          MYSQL_ROOT_HOST: "%"
+          TZ: Asia/Shanghai
+        # 不预设 MYSQL_DATABASE：由 seed 自己建库，才能用 utf8mb4_general_ci 建库，
+        # 否则 MySQL 8 默认的 utf8mb4_0900_ai_ci 会和建表语句冲突（Illegal mix of collations）
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysql -h 127.0.0.1 -uroot -pci_root_password -e 'SELECT 1'"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=12
+          --health-start-period=30s
+
+    env:
+      DB_HOST: 127.0.0.1
+      DB_PORT: "3306"
+      DB_USER: root
+      DB_PASSWORD: ci_root_password
+      DB_NAME: suixinshop
+      JWT_SECRET: ci-only-jwt-secret-do-not-use-in-production
+      MEMBER_JWT_SECRET: ci-only-member-secret-do-not-use-in-production
+      ADMIN_INIT_PASSWORD: ci_only_admin_password
+      # 测试需要取验证码，仅限 CI；对外部署必须为 false
+      SMS_MOCK: "true"
+      # 数据库不可用时禁止跳过测试，否则 CI 会把失败显示成通过
+      REQUIRE_DB: "1"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          python-version: "3.12"
+
+      - name: Align MySQL timezone
+        run: mysql -h 127.0.0.1 -uroot -pci_root_password -e "SET GLOBAL time_zone='+08:00';"
+
+      - name: Install dependencies
+        working-directory: backend
+        # uv.lock 锁定官方 PyPI；--frozen 表示不重新解析、不校验，直接按 lock 安装
+        run: uv sync --frozen
+
+      - name: Seed base data
+        working-directory: backend
+        run: uv run python -m seed.runner base
+
+      - name: Seed demo data
+        working-directory: backend
+        run: uv run python -m seed.runner demo
+
+      - name: Run tests
+        working-directory: backend
+        run: uv run pytest -q tests

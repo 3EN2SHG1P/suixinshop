@@ -1,0 +1,85 @@
+# 内部档案（不备份不入库，对外发布不带）
+#   artifacts/ 放 SDD 契约、决策草稿、旧版变更记录、发布检查清单
+#   docs/ 只放对外文档；内部材料一律进这里，不要进 docs/
+artifacts/
+internal/
+
+# 自打包的发布压缩包（防止二次上传时带上）
+*.zip
+
+# 运行期上传资产（不入库）
+# uploads/seed/ 下的演示图由 `seed.runner demo` 从 front/images/ 自动同步生成，无需入库
+uploads/
+# 虚拟环境
+.venv/
+venv/
+
+# 日志
+*.log
+*.log.*
+logs/
+
+# Python 缓存（backend/.gitignore 已覆盖，此处双保险）
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.tox/
+nohup.out
+_uv.out
+_uv.err
+
+# 环境变量与密钥（模板必须入库，真实 .env 绝不入库）
+# 注意：.env.* 已顺带覆盖 backend/.env 与根目录 .env.db（Docker Compose 的本地口令文件）
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+*.jks
+id_rsa*
+*.old
+
+# 数据库导出（含真实业务数据，绝不入库）
+*.sql
+*.sql.gz
+*.dump
+*.db
+*.sqlite3
+*.sqlite
+
+# 编辑/备份残留可能含旧密钥
+*.bak
+*.orig
+*~
+.history/
+
+# IDE / 编辑器
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 操作系统
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# 构建/依赖产物（按需保留）
+node_modules/
+dist/
+build/
+
+# IDE / AI 工具数据
+.codebuddy/
+.code-review/
+.playwright-cli/

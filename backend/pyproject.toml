@@ -1,0 +1,31 @@
+[project]
+name = "shop-backend"
+version = "0.1.0"
+description = "随心商城 —— FastAPI + MySQL 异步电商后端"
+license = "MIT"
+authors = [{ name = "suixinshop contributors" }]
+requires-python = ">=3.10"
+dependencies = [
+    "aiomysql>=0.3.2",
+    "bcrypt>=5.0.0",
+    "fastapi>=0.141.1",
+    "pydantic>=2.13.5",
+    "pyjwt>=2.13.0",
+    "pymysql>=1.2.0",
+    "python-multipart>=0.0.32",
+    "uvicorn>=0.52.4",
+]
+
+# 依赖源说明：uv.lock 锁定官方 PyPI（全球可用，无第三方镜像依赖）。
+# 中国大陆网络较慢时可临时走镜像，不要改 pyproject.toml 与 uv.lock：
+#   $env:UV_DEFAULT_INDEX='https://pypi.tuna.tsinghua.edu.cn/simple'; uv sync
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=9.1.1",
+]
+
+[tool.pytest.ini_options]
+# 固定测试目录：保证在 backend/ 下裸跑 pytest 也会加载 tests/conftest.py 的数据库探活钩子
+testpaths = ["tests"]
