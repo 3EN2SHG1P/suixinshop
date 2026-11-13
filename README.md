@@ -426,7 +426,7 @@ uv run pytest -q tests
 
 <span>&nbsp;•&nbsp;&nbsp;&nbsp;</span>**未深挖**：营销活动未接入结算引擎、`data_scope` 行级隔离只覆盖商品与管理员
 
-下表按影响程度排列，二次开发建议从上往下补齐。
+下表逐项列出，二次开发时按需取舍。
 
 <table>
 <tr><th width="18%">限制</th><th>说明</th></tr>

@@ -422,7 +422,7 @@ Concurrency control, permission checks, money precision and upload safety follow
 
 <span>&nbsp;•&nbsp;&nbsp;&nbsp;</span>**Not deep**: marketing activities are not wired into checkout; `data_scope` row filtering covers goods and admin accounts only
 
-The table is ordered by impact, not by effort — work from the top when developing further.
+The table lists each limitation; pick what matters for your own use case.
 
 | Limitation | Note |
 |---|---|
