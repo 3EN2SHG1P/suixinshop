@@ -6,27 +6,11 @@
 
 ### 新增
 
-- `docs/README.md`：文档索引，说明每份文档写给谁、按目的该看哪一份
-- `docs/openapi.json`：接口快照（136 条路径 / 186 个操作），无需启动后端即可查阅或导入 Postman / 客户端生成器
-- `docs/api-reference.md` 新增「关系图（ER）」：1 张订单主干图 + 7 张分域图，字段取自 `seed/schema.py` 真实 DDL，并标注全部表为逻辑关联、DDL 中无 `FOREIGN KEY` 约束
-
 ### 变更
-
-- 项目定位统一为**学习 / 演示 / 二次开发**：中英 README 首屏增加定位说明，声明段补充「可作为后台管理底座」与生产责任归属；`SECURITY.md` 定位改为「代码层按生产标准、外围依赖按演示标准」两层表述；`CONTRIBUTING.md` 增加维护状态（个人维护，响应时间不保证）
-- `README` §7 开头由单句「不具备生产可用性」改为按「未接入 / 未常驻 / 未深挖」三类的边界说明，结论不变
-- `SECURITY.md` 的「已实现的防护」扩为 15 条「已实现的安全措施」，每条标注真实代码位置（提权拦截、越权单条校验、批量整体拒绝、上传白名单、富文本净化、开放重定向拦截、配置密钥脱敏、售后超额校验、库存乐观锁、取消订单幂等）
-- `docs/功能清单.md` 后台表格增加「状态」列（● 完整 / ◐ 部分 / ○ 仅 CRUD），依据是测试实测：`routers/content.py`、`routers/marketing.py`、`routers/admin_logs.py` 在测试中零命中
-- 文档一致性修正：中英 README 架构图的接口数 `185` 校正为 `186`（与 `/api/docs` 实际 186 个操作一致）；`CONTRIBUTING.md`（2 处）、PR 模板、`开发指南.md` 共 4 处「不低于 88 passed」改为「全部通过」（实际用例已增至 99 个，固定数字会让「有失败但总数够」蒙混过关）；`backend/.env.example` 中 `STATIC_FRONT_DIR` 的注释由「已停用」更正为「后端不挂载 `/front`，但 `/api/v1/shop/live/version` 仍扫描该目录生成资源指纹」
-- `manager/README.md` 删除与 `docs/功能清单.md` 重复的 28 页清单表，改为指向功能清单（页面信息只维护一处）；`docs/README.md` 索引补登 `manager/README.md`
-- 品牌 Logo 更换为作者独立设计的最终版（青绿版）：`front/images/`、`manager/images/` 下的 `logo.png`（1024×1024）与 `logo-transparent.png`（256×256，favicon）全部替换，前台 18 页头部/页脚/登录横幅、后台登录页与侧栏、`seed` 站点 Logo 默认值同步生效；`docs/screenshots/` 8 张截图内嵌 Logo 同步更新；PNG 内嵌 `Title/Author/Copyright` 元数据
-- 新增 `NOTICE`：Logo 为作者原创美术作品，已提交著作权登记申请，明确排除于 MIT 许可之外；分列允许范围（随源码再分发、部署展示、界面适配缩放、文章/课程/评测引用、衍生版本沿用）与禁止范围（他项目标识、商标商号、改动图形、单独分发），并声明许可不可撤回、按现状提供；`LICENSE` 追加说明段，中英 README 声明同步修正
-- 中英 README 顶部加居中 Logo 与版权署名行；全站 78 处 Logo 引用统一加 `?v=2` 版本参数，避免浏览器 favicon 缓存长期显示旧图；新增 `tests/test_brand_assets.py`（11 条）守住四处副本一致、alpha 通道、版权元数据、全站引用、缓存参数与 README/NOTICE 声明
 
 ### 修复
 
-- 前台未登录点「我的订单」（及购物车结算、地址、支付、优惠券、积分、售后等 10 个需登录页）原地不动或白屏：`front/js/guard.js` 去掉了会掐掉跳转的 `window.stop()`，改为先隐藏再 `location.replace` 到 `login.html?redirect=<原页>`，并加 600ms 兜底重试与 `pageshow` 可见性恢复；隐藏方式由 `display:none` 改为 `visibility`，避免 bfcache 后退回来是空白页。登录成功后按 `redirect` 回跳原页的逻辑不变（`auth.js gotoAfterLogin`）
-
-## [0.1.0] - 2026-10-30
+## [0.1.0] - 2026-11-12
 
 首个公开版本。
 
@@ -41,6 +25,20 @@
 - `docker-compose.yml`：一条命令起 MySQL 8，端口默认只绑回环地址，口令走变量注入
 - 文档：中英双版 README、功能清单、操作手册、开发指南、接口与表结构手册、需求归档；CI（MySQL 8 service + `uv sync --frozen` + 全量 pytest）
 - `.editorconfig`、`.gitattributes`（统一 LF、声明二进制）
+- `docs/README.md`：文档索引，说明每份文档写给谁、按目的该看哪一份
+- `docs/openapi.json`：接口快照（136 条路径 / 186 个操作），无需启动后端即可查阅或导入 Postman / 客户端生成器
+- `docs/api-reference.md` 新增「关系图（ER）」：1 张订单主干图 + 7 张分域图，字段取自 `seed/schema.py` 真实 DDL，并标注全部表为逻辑关联、DDL 中无 `FOREIGN KEY` 约束
+
+### 变更
+
+- 项目定位为**学习 / 演示 / 二次开发**：中英 README 首屏注明定位，声明段说明「可作为后台管理底座」与生产责任归属；`SECURITY.md` 按「代码层按生产标准、外围依赖按演示标准」两层表述；`CONTRIBUTING.md` 注明维护状态（个人维护，响应时间不保证）
+- `README` §7 按「未接入 / 未常驻 / 未深挖」三类交代能力边界，结论为开箱不可直接上生产
+- `SECURITY.md` 列「已实现的安全措施」15 条，每条标注真实代码位置（提权拦截、越权单条校验、批量整体拒绝、上传白名单、富文本净化、开放重定向拦截、配置密钥脱敏、售后超额校验、库存乐观锁、取消订单幂等）
+- `docs/功能清单.md` 后台表格带「状态」列（● 完整 / ◐ 部分 / ○ 仅 CRUD），依据测试实测：`routers/content.py`、`routers/marketing.py`、`routers/admin_logs.py` 无接口用例
+- `manager/README.md` 只讲前端结构与约定，页面清单统一指向 `docs/功能清单.md`（页面信息单点维护）
+- 品牌 Logo 为作者独立设计的最终版（青绿版）：`front/images/`、`manager/images/` 下的 `logo.png`（1024×1024）与 `logo-transparent.png`（256×256，favicon），前台 18 页头部/页脚/登录横幅、后台登录页与侧栏、`seed` 站点 Logo 默认值同步生效；`docs/screenshots/` 8 张截图内嵌 Logo 同步更新；PNG 内嵌 `Title/Author/Copyright` 元数据
+- 新增 `NOTICE`：Logo 为作者原创美术作品，已提交著作权登记申请，明确排除于 MIT 许可之外；分列允许范围（随源码再分发、部署展示、界面适配缩放、文章/课程/评测引用、衍生版本沿用）与禁止范围（他项目标识、商标商号、改动图形、单独分发），并声明许可不可撤回、按现状提供。`LICENSE` 保持标准 MIT 全文（不含附加条款，以保证许可类型可被自动识别），Logo 排除条款仅在 `NOTICE` 声明
+- 中英 README 顶部加居中 Logo 与版权署名行；全站 78 处 Logo 引用统一加 `?v=2` 版本参数，避免浏览器 favicon 缓存长期显示旧图；`tests/test_brand_assets.py`（11 条）守住四处副本一致、alpha 通道、版权元数据、全站引用、缓存参数与 README/NOTICE 声明
 
 ### 安全
 
@@ -56,6 +54,7 @@
 
 ### 修复
 
+- 前台未登录点「我的订单」（及购物车结算、地址、支付、优惠券、积分、售后等 10 个需登录页）原地不动或白屏：`front/js/guard.js` 去掉了会掐掉跳转的 `window.stop()`，改为先隐藏再 `location.replace` 到 `login.html?redirect=<原页>`，并加 600ms 兜底重试与 `pageshow` 可见性恢复；隐藏方式由 `display:none` 改为 `visibility`，避免 bfcache 后退回来是空白页。登录成功后按 `redirect` 回跳原页的逻辑不变（`auth.js gotoAfterLogin`）
 - 编辑商品改为 `original_stock` 乐观锁校验，不再用表单快照覆盖并发期间的销量
 - 取消订单、优惠券核销改为校验更新行数，并发下不会重复回补库存 / 重复用券
 - 积分抵扣与取消返还改用条件更新并检查结果，避免「钱扣了账没记」

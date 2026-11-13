@@ -1,6 +1,6 @@
 <p align="center">
   <img src="./front/images/logo.png" width="120" alt="SuiXinShop"><br>
-  <sub>Logo © 2026 3EN2SHG1P ｜ terms in <a href="./NOTICE">NOTICE</a></sub>
+  <sub>Logo © 2026 3EN2SHG1P ｜ terms in <a href="./NOTICE">NOTICE</a> ｜ <a href="./README.md">中文</a></sub>
 </p>
 
 <h1 align="center">Suixin Shop</h1>
@@ -465,8 +465,11 @@ The table is ordered by impact, not by effort — work from the top when develop
 | Modify code / add endpoints or tables | [docs/开发指南.md](./docs/开发指南.md) (Chinese) |
 | Work on the admin console front end | [manager/README.md](./manager/README.md) (Chinese) |
 | Look up env vars, endpoints, tables | [docs/api-reference.md](./docs/api-reference.md) (Chinese) |
+| Browse every endpoint without running the backend | [docs/openapi.json](./docs/openapi.json) (136 paths / 186 operations) |
 | Release history | [CHANGELOG.md](./CHANGELOG.md) (Chinese) |
 | Contribution / security | [CONTRIBUTING.md](./CONTRIBUTING.md) ｜ [SECURITY.md](./SECURITY.md) |
+
+Every document under `docs/` is written in Chinese; the two READMEs are the only bilingual entry points.
 
 ```
 suixinshop/

@@ -1,6 +1,6 @@
 <p align="center">
   <img src="./front/images/logo.png" width="120" alt="随心商城 SuiXinShop"><br>
-  <sub>Logo © 2026 3EN2SHG1P ｜ 使用范围见 <a href="./NOTICE">NOTICE</a></sub>
+  <sub>Logo © 2026 3EN2SHG1P ｜ 使用范围见 <a href="./NOTICE">NOTICE</a> ｜ <a href="./README.en.md">English</a></sub>
 </p>
 
 <h1 align="center">随心商城</h1>
@@ -470,6 +470,7 @@ uv run pytest -q tests
 | 改代码 / 加接口加表 | [docs/开发指南.md](./docs/开发指南.md) |
 | 改后台前端页面 | [manager/README.md](./manager/README.md) |
 | 查环境变量、接口、表结构 | [docs/api-reference.md](./docs/api-reference.md) |
+| 不启动后端就想看全部接口 | [docs/openapi.json](./docs/openapi.json)（136 条路径 / 186 个操作的快照） |
 | 看版本变更记录 | [CHANGELOG.md](./CHANGELOG.md) |
 | 看贡献流程 / 安全须知 | [CONTRIBUTING.md](./CONTRIBUTING.md) ｜ [SECURITY.md](./SECURITY.md) |
 | English | [README.en.md](./README.en.md) |

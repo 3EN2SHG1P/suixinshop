@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 安全漏洞（请勿公开提交）
+    url: https://github.com/3EN2SHG1P/suixinshop/security/advisories/new
+    about: 通过 Private vulnerability reporting 私下上报，要求与响应说明见 SECURITY.md。公开 Issue 里请勿贴漏洞细节。
+  - name: 使用与部署问题
+    url: https://github.com/3EN2SHG1P/suixinshop/blob/main/CONTRIBUTING.md
+    about: 提交前请先读贡献指南的「报告问题」一节，并附上复现步骤、报错原文与脱敏后的配置。
