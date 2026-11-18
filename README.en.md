@@ -5,7 +5,14 @@
 
 <h1 align="center">Suixin Shop</h1>
 
-[![CI](https://github.com/3EN2SHG1P/suixinshop/actions/workflows/ci.yml/badge.svg)](https://github.com/3EN2SHG1P/suixinshop/actions/workflows/ci.yml)
+<p align="center">
+  <a href="./LICENSE"><img src="https://img.shields.io/github/license/3EN2SHG1P/suixinshop" alt="license: MIT"></a>
+  <a href="https://github.com/3EN2SHG1P/suixinshop/actions/workflows/ci.yml"><img src="https://github.com/3EN2SHG1P/suixinshop/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <img src="https://img.shields.io/badge/python-3.10%2B-blue" alt="python 3.10+">
+  <img src="https://img.shields.io/badge/FastAPI-0.141.1-009688" alt="FastAPI 0.141.1">
+  <img src="https://img.shields.io/badge/MySQL-5.7%2B-4479A1" alt="MySQL 5.7+">
+  <img src="https://img.shields.io/badge/frontend-vanilla%20JS-F7DF1E" alt="frontend: vanilla JS">
+</p>
 
 A storefront you can walk end-to-end: browse goods, place an order, then ship it from the admin console. `FastAPI` + `MySQL` fully async backend; both front ends are plain static pages — no framework, no build step, just `Python`.
 
@@ -352,7 +359,7 @@ Most failures come down to two things: **wrong working directory** or **wrong `.
 | Storefront loads but has **no goods** | Only `base` was run: add `uv run python -m seed.runner demo` |
 | `127.0.0.1:8000` unreachable | Start the static server (step ⑦) and open the root path, no `/front/` |
 | Blank page / CORS errors | Backend not running, or ports changed without updating `CORS_ORIGINS` |
-| `uv sync` hangs | Use a mirror: `$env:UV_DEFAULT_INDEX='https://pypi.tuna.tsinghua.edu.cn/simple'; uv sync` (do not edit `pyproject.toml` / `uv.lock`) |
+| `uv sync` hangs | The download source is pinned inside `uv.lock` (every dependency URL points at the Tsinghua TUNA mirror). To switch back to the official PyPI, re-lock from `backend/`: `Remove-Item uv.lock; $env:UV_DEFAULT_INDEX='https://pypi.org/simple'; uv lock`, then `uv sync`; editing `pyproject.toml` without re-locking does nothing |
 | Error contains `uv trampoline failed to canonicalize script path` | Two causes: ① the project path contains non-ASCII characters or spaces — move the repo to an ASCII-only path, reopen the terminal, then run `uv sync`; ② the repo was renamed or moved, and the launchers inside `backend/.venv` still point at the old path — delete `backend/.venv` and run `uv sync` again |
 | Admin login rejected | Password is the one printed on first `seed base`; see "Forgot the admin password" under [#3](#3-what-success-looks-like) |
 | `pytest` errors everywhere | Needs a real MySQL with both `base` and `demo`, plus `ADMIN_INIT_PASSWORD` matching the current admin password |

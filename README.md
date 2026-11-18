@@ -5,7 +5,14 @@
 
 <h1 align="center">随心商城</h1>
 
-[![CI](https://github.com/3EN2SHG1P/suixinshop/actions/workflows/ci.yml/badge.svg)](https://github.com/3EN2SHG1P/suixinshop/actions/workflows/ci.yml)
+<p align="center">
+  <a href="./LICENSE"><img src="https://img.shields.io/github/license/3EN2SHG1P/suixinshop" alt="license: MIT"></a>
+  <a href="https://github.com/3EN2SHG1P/suixinshop/actions/workflows/ci.yml"><img src="https://github.com/3EN2SHG1P/suixinshop/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <img src="https://img.shields.io/badge/python-3.10%2B-blue" alt="python 3.10+">
+  <img src="https://img.shields.io/badge/FastAPI-0.141.1-009688" alt="FastAPI 0.141.1">
+  <img src="https://img.shields.io/badge/MySQL-5.7%2B-4479A1" alt="MySQL 5.7+">
+  <img src="https://img.shields.io/badge/frontend-vanilla%20JS-F7DF1E" alt="frontend: vanilla JS">
+</p>
 
 一套从「逛商品」到「后台发货」都能走通的商城系统。`FastAPI` + `MySQL` 全异步后端，前台和后台都是纯静态页面 —— 不用框架、不用构建，装个 `Python` 就能打开。
 
@@ -352,7 +359,7 @@ macOS/Linux 若报 command not found，把 `python` 换成 `python3`。
 | 前台能开但**没有商品** | 只跑了 `base`，补跑 `uv run python -m seed.runner demo` |
 | `127.0.0.1:8000` 打不开 | 前台要单独起静态服务（[#2](#2-5-分钟跑起来) ⑦），且直接访问根路径，没有 `/front/` |
 | 前台页面空白 / 控制台报 CORS | 后端没起（8001），或改过端口后没同步 `.env` 的 `CORS_ORIGINS` |
-| `uv sync` 卡住 / 极慢 | 临时走镜像：`$env:UV_DEFAULT_INDEX='https://pypi.tuna.tsinghua.edu.cn/simple'; uv sync`（别改 `pyproject.toml` 与 `uv.lock`） |
+| `uv sync` 卡住 / 极慢 | 下载源已固化在 `uv.lock`（每个依赖的下载地址都指向清华 TUNA 镜像）。要换回官方 PyPI 须在 `backend/` 下整体重锁：`Remove-Item uv.lock; $env:UV_DEFAULT_INDEX='https://pypi.org/simple'; uv lock`，再 `uv sync`；不重锁、只改 `pyproject.toml` 无效 |
 | 报错含 `uv trampoline failed to canonicalize script path` | 两种原因：① 项目路径含中文或空格。把仓库移到纯英文路径后重开终端再 `uv sync`；② 仓库改过目录名/搬过位置，`backend/.venv` 里的启动器仍记录旧路径。删掉 `backend/.venv` 后重新 `uv sync` |
 | 登录后台提示账号或密码错误 | 密码是 `seed base` 首次打印的随机值；忘了见 [#3](#3-看到什么算成功) 账号表下的「后台密码忘了」 |
 | `pytest` 大面积 error | 需要真实 MySQL 且 `base` + `demo` 都跑过；`.env` 要填 `ADMIN_INIT_PASSWORD` 并 `seed base` 同步一次 |

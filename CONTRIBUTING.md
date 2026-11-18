@@ -8,7 +8,7 @@
 
 ```bash
 cd backend
-uv sync                               # 依赖由 uv 管理（pyproject.toml + uv.lock）
+uv sync                               # 依赖由 uv 管理（pyproject.toml + uv.lock；lock 已固化下载源，换源须整体重锁）
 copy .env.example .env                # Windows CMD；PowerShell 与 macOS/Linux 用 cp
 uv run python -m seed.runner base     # 自动建库 + 建表 + 管理员
 uv run python -m seed.runner demo     # 演示数据

@@ -16,9 +16,11 @@ dependencies = [
     "uvicorn>=0.52.4",
 ]
 
-# 依赖源说明：uv.lock 锁定官方 PyPI（全球可用，无第三方镜像依赖）。
-# 中国大陆网络较慢时可临时走镜像，不要改 pyproject.toml 与 uv.lock：
-#   $env:UV_DEFAULT_INDEX='https://pypi.tuna.tsinghua.edu.cn/simple'; uv sync
+# 依赖源：uv.lock 逐包记录下载地址，当前全部指向清华 TUNA 镜像（锁文件为地址的事实来源）。
+# 换源须整体重锁；仅编辑本文件或 uv.lock 文本无效——uv 按锁文件地址下载，改 URL 会被 hash 校验拒绝：
+#   PowerShell: Remove-Item uv.lock; $env:UV_DEFAULT_INDEX='https://pypi.org/simple'; uv lock
+#   bash:       rm uv.lock && UV_DEFAULT_INDEX=https://pypi.org/simple uv lock
+# 重锁按下方版本下界重新解析，依赖可能上浮；重锁后先跑 pytest，失败可 git checkout -- uv.lock 回滚。
 
 [dependency-groups]
 dev = [

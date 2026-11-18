@@ -70,7 +70,7 @@
 
 - 商品型号与图片文件名改为虚构编号，前端全局变量去掉品牌前缀
 - 前台移除真实企业客服号、虚构业务入口与无实现依据的服务承诺，改为示例说明
-- 依赖精简：移除三个零引用包（`openpyxl`、`pydantic-settings`、`cryptography`）；`uv.lock` 锁定官方 PyPI
+- 依赖精简：移除三个零引用包（`openpyxl`、`pydantic-settings`、`cryptography`）；`uv.lock` 固化全部依赖的下载地址（指向清华 TUNA 镜像）
 
 ### 已知限制
 
